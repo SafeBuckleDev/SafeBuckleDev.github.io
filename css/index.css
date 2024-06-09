@@ -1,0 +1,148 @@
+:root{
+    --bg1: #b5ebc9;
+    --bg2: #fec6c7;
+    --bg3: #b5bccc;
+    --bgdef: #fff;
+
+    --lineC: #643a52;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    color: var(--lineC);
+}
+
+body{
+    background-color: var(--bg1);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header{
+    height: 100px;
+    background-color: var(--bgdef);
+    border-bottom: 6px solid var(--lineC);
+}
+
+article div{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+article div figure{
+    text-align: center;
+    flex: 0 1 500px;
+    width: 200px; height: 500px;
+    margin: 25px;
+    padding: 20px;
+    box-shadow: 1px 3px 0px var(--lineC);
+    border: 3px solid var(--lineC);
+    background-color: var(--bgdef);
+
+    transition: all 250ms ease-in-out;
+}
+
+article div figure .ImgBanner{
+    width: 107.5%;
+    margin-left: -3.75%;
+    margin-top: -3.75%;
+    box-shadow: 0px 5px 0px var(--lineC);
+}
+
+article div figure h1{
+    margin-top: 5%;
+    margin-bottom: 2.5%;
+    font-size: 200%;
+}
+
+article div figure p{
+    font-size: 120%;
+    margin-bottom: 2.5%;
+}
+
+article div figure a{
+    font-size: 350%;
+    transition: all 250ms ease-in-out;
+}
+
+.btn{
+    background-color: var(--bg2);;
+    padding: 20px 80px;
+    border: 3px solid var(--lineC);
+    box-shadow: 1px 3px 0px var(--lineC);
+
+    transition: all 250ms ease-in-out;
+}
+
+.btn:hover{
+    padding: 25px 100px;
+    box-shadow: 5px 10px 0px var(--lineC);
+    cursor:pointer;
+}
+
+.btn:active{
+    background-color: var(--lineC);
+}
+
+.btn:active h1{
+    color: var(--bg2);
+}
+
+.textCenter{
+    margin-top: 5%;
+    margin-bottom: 2.5%;
+}
+
+article div figure a:hover{
+    font-size: 375%;
+}
+
+article div figure:hover{
+    box-shadow: 5px 10px 0px var(--lineC);
+    flex: 0 1 550px;
+    width: 220px; height: 550px;
+}
+
+.infoContainer{
+    display: flex;
+    flex-flow: row;
+}
+
+.infoContainer .textArea{
+    width: 70%; height: 450px;
+    overflow-wrap: break-word 
+}
+
+.infoContainer .imgArea{
+    width: 350px; height: 450px;
+    border: 3px solid var(--lineC);
+    border-top: 8px solid var(--lineC);
+
+    background-color: var(--bg3);
+}
+
+footer{
+    border-top: 3px solid var(--lineC);
+    margin-top: auto;
+    padding: 40px 20px;
+    background-color: var(--bgdef);
+}
+
+::-webkit-scrollbar{
+    background: var(--lineC);
+}
+
+::-webkit-scrollbar-thumb{
+    border: 3px solid var(--lineC);
+    background: var(--bg2);
+}

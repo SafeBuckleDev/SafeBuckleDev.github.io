@@ -1,0 +1,182 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="css/navbar.css">
+        <link rel="stylesheet" type="text/css" href="css/projPage.css">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/atom-one-dark.min.css">
+    </head>
+    <body>
+        <header>
+            <a href="index.html" class="logo">Sander Meijer</a>
+
+            <ul>
+                <li><a href="index.html">Projecten</a></li>
+                <li><a href="archief.html">Archief</a></li>
+                <li><a href="#ContactInfo">Contact</a></li>
+            </ul>
+        </header>
+    
+        <div class="space"></div>
+
+        <section>
+            <div>
+                <img class="projWebcover" src="img/webcover_memory.png">
+                <h2 class="projTitle">Memory</h2>
+                <div class="space"></div>
+            </div>
+
+            <div class="centeredBox">
+                <h3>Voor dit project heb ik een simpele memory game gemaakt. De game heeft oneindige "levels" waardoor het altijd leuk blijft om te spelen. Bij het maken van dit project heb ik als doel gesteld om het project zo schaalbaar mogelijk te maken waardoor extra kaarten en moeilijkheidsgraden makelijk te implementeren zijn.</h3>
+            </div>
+            
+            <div class="centeredBox">
+                <video class="vid" controls>
+                    <source src="vid/vid_mem.mp4" type="video/mp4">
+                </video>
+            </div>
+        </section>
+
+        <div class="space"></div>
+
+        <section>
+            <h1>Kaart rotatie</h1>
+            <div>
+                <figure>
+                    <div class="centeredBox">
+                        <h3>Resultaat:</h3>
+                    </div>
+                    <div class="centeredBox">
+                        <img src="img/memory/gif1.gif">
+                    </div>
+                </figure>
+
+                <figure>
+                    <div class="centeredBox">
+                        <h3>Om de kaart te laten bewegen gebruiken we de OnMouseUp() functie van unity om muis input op een GameObject te registreren. Dit ziet er als volgt uit:</h3>
+                    </div>
+                    <pre class="codeSnippet">
+                        <code>
+ private void OnMouseUp()
+    {
+        if(game.AllowedToSelectCard(this) == true)
+        {
+            selectSound.Play();
+            if (status == CardStatus.show_front)
+            {
+                TurnToBack();
+                game.SelectCard(gameObject);
+            }
+            if (status == CardStatus.show_back)
+            {
+                TurnToFront();
+            }
+        }
+    }
+                        </code>
+                    </pre>
+
+                    <div class="centeredBox">
+                        <h3>Daarna roepen we de TurnToFront of TurnToBack void op.</h3>
+                    </div>
+
+                    <pre class="codeSnippet">
+                        <code>
+public void TurnToBack()
+    {
+        turnTime = 0f;
+        targetRotation = Quaternion.Euler(0, 180, 0);
+        status = CardStatus.rotating_to_back;
+        canPlayAnim = false;
+        playcard.transform.position = gameObject.transform.position;
+    }
+                        </code>
+                    </pre>
+
+                    <div class="centeredBox">
+                        <h3>Dit zorgt ervoor dat in de update functie de kaart gaat draaien dat ziet er zo uit:</h3>
+                    </div>
+
+                    <pre class="codeSnippet">
+                        <code>
+if(status == CardStatus.rotating_to_back || status == CardStatus.rotating_to_front)
+    {
+        turnTime += Time.deltaTime;
+
+        if(targetRotation == Quaternion.Euler(0, 180, 0))
+        {
+            transform.rotation = Quaternion.Slerp(Quaternion.Euler(0, 0, 0), targetRotation, turnTime * 2);
+        }
+        else
+        {
+                transform.rotation = Quaternion.Slerp(Quaternion.Euler(0, 180, 0), targetRotation, turnTime * 2);
+        }
+    }
+                        </code>
+                    </pre>
+                </figure>
+            </div>
+        </section>
+
+        <div class="space"></div>
+
+        <section>
+            <div class="centeredBox">
+                <h1>Sprites laden vanuit recources folder</h1>
+            </div>
+            <div class="space"></div>
+            <div class="centeredBox">
+                <h3>Doormiddel van sprites te laden uit een recources folder is dat het heel gemakkelijk is om nieuwe kaarten toe te voegen.</h3>
+            </div>
+            <div>
+                <figure>
+                    <div class="centeredBox">
+                        <img src="img/memory/recourse.png">
+                    </div>
+                </figure>
+
+                <figure>
+                    <pre class="codeSnippet">
+                        <code>
+private void LoadSprites()
+{
+    frontSprites = Resources.LoadAll<Sprite>( frontsidesFolder );
+    backSprites = Resources.LoadAll<Sprite>( backsidesFolder );
+}
+                        </code>
+                    </pre>
+                </figure>
+            </div>
+        </section>
+
+        <div class="space"></div>
+
+        <section>
+            <figure>
+                <div class="space"></div>
+                <div class="centeredBox">
+                    <button class="btn" onclick="location.href='proj/rollu.zip'"><h1 class="textCenter">Download Project! (windows)</h1></button>
+                </div>
+                <div class="space"></div>
+
+                <div class="centeredBox">
+                    <button class="btn" onclick="location.href='proj/rollu.zip'"><h1 class="textCenter">Download Project! (telefoon android)</h1></button>
+                </div>
+
+                <div class="space"></div>
+            </figure>
+        </section>
+
+        <div class="space"></div>
+
+        <footer class="ContactInfo" id="ContactInfo">
+            <h2>Contact</h2>
+            <p>sandermeijer345@gmail.com</p>
+        </footer>
+
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+    </body>
+</html>

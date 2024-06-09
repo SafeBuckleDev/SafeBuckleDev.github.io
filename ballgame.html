@@ -1,0 +1,240 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="css/navbar.css">
+        <link rel="stylesheet" type="text/css" href="css/projPage.css">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/atom-one-dark.min.css">
+    </head>
+    <body>
+        <header>
+            <a href="index.html" class="logo">Sander Meijer</a>
+
+            <ul>
+                <li><a href="#">Projecten</a></li>
+                <li><a href="archief.html">Archief</a></li>
+                <li><a href="#ContactInfo">Contact</a></li>
+            </ul>
+        </header>
+    
+        <div class="space"></div>
+
+        <section>
+            <div>
+                <img class="projWebcover" src="img/webcover_ballg.png">
+                <h2 class="projTitle">Rollu</h2>
+                <div class="space"></div>
+            </div>
+
+            <div class="centeredBox">
+                <h3>Rollu is een 3d physics arcade ball game vergelijkbaar met Super Monkey Ball. Bij dit project heb ik me gefoccused om de speler controlls zo goed mogelijk te laten voelen voor een uitdagende maar leuke game ervaring.</h3>
+            </div>
+
+            <div class="space"></div>
+        </section>
+
+        <div class="space"></div>
+
+        <section>
+            <h1>Player Movement</h1>
+            <div>
+                <figure>
+                    <div class="centeredBox">
+                        <h3>De speler beweegt doormiddel van force toe te voegen bepalend aan de speler input.</h3>
+                    </div>
+
+                    <div class="centeredBox">
+                        <img src="img/ballproj/gif1.gif">
+                    </div>
+                </figure>
+
+                <figure>
+                    <pre class="codeSnippet">
+                        <code>
+public void Move(float verticalTilt, float horizontalTilt, Vector3 right)
+{
+    // Only apply movement when the player is grounded
+    if (OnGround())
+    {
+        CalculateFloorNormal();
+            
+        // No input from player
+        if (horizontalTilt == 0.0f && verticalTilt == 0.0f && rigidBody.velocity.magnitude > 0.0f)
+        {
+            rigidBody.velocity = Vector3.Lerp(rigidBody.velocity, Vector3.zero, moveForce * 0.1f * Time.deltaTime); // Slow down
+        }
+        else
+        {
+            Vector3 forward = Vector3.Cross(right, floorNormal);
+            Vector3 forwardForce = (verticalTilt > 0.0f ? 1.0f : 0.5f) * moveForce * verticalTilt * forward;
+            Vector3 rightForce = moveForce * horizontalTilt * right;
+            
+            Vector3 forceVector = forwardForce + rightForce;
+            
+            rigidBody.AddForce(forceVector);
+        }
+    }
+}
+                        </code>
+                    </pre>
+                </figure>
+            </div>
+        </section>
+
+        <div class="space"></div>
+
+        <section>
+            <h1>Camera movement</h1>
+            <div>
+                <figure>
+                    <pre class="codeSnippet">
+                        <code>
+void CameraTilt()
+    {
+        float scaledVerticalTilt = initialXRotation - (verticalTilt * maxVerticalAngle);
+                        
+        float angleBetweenFloorNormal = useCameraAngleCorrection ? Vector3.SignedAngle(Vector3.up, player.floorNormal, transform.right) : 0.0f;
+                        
+        Quaternion targetXRotation = Quaternion.Euler(scaledVerticalTilt + angleBetweenFloorNormal, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetXRotation, tiltSpeed * Time.deltaTime);
+                        
+        float scaledHorizontalTilt = Input.GetAxis("Horizontal") * maxHorizontalAngle;
+                        
+        Quaternion targetZRotation = Quaternion.Euler(mCamera.rotation.eulerAngles.x, mCamera.rotation.eulerAngles.y, scaledHorizontalTilt);
+        mCamera.rotation = Quaternion.RotateTowards(mCamera.rotation, targetZRotation, tiltSpeed * Time.deltaTime);
+    }
+                        </code>
+                    </pre>
+                    <pre>
+                        <code>
+void FollowTarget()
+{
+    Vector3 vectorA = new Vector3(transform.forward.x, 0.0f, transform.forward.z);
+
+    Vector3 vectorB = new Vector3(player.rigidBody.velocity.x, 0.0f, player.rigidBody.velocity.z);
+
+    float rotateAngle = Vector3.SignedAngle(vectorA.normalized, vectorB.normalized, Vector3.up);
+
+    float speedFactor = Vector3.Dot(vectorA, vectorB) > 0.0f ? vectorB.magnitude : 1.0f;
+
+    transform.Rotate(Vector3.up, rotateAngle * Mathf.Clamp(speedFactor, 1.0f, 2.0f) * Time.deltaTime);
+
+    transform.position = player.transform.position - (transform.forward * offset);
+    transform.LookAt(player.transform.position);
+}
+                        </code>
+                    </pre>
+                </figure>
+
+                <figure>
+                    <div class="centeredBox">
+                        <h3>de camera draait doormiddel van quatornions de hoek van de rotatie is bepaald door de maximale rotatie en de horizontale/verticale input van de speler</h3>
+                    </div>
+
+                    <div class="centeredBox">
+                        <img src="img/ballproj/gif2.gif">
+                    </div>
+                </figure>
+            </div>
+
+            <div>
+                <figure>
+                </figure>
+            </div>
+        </section>
+
+        <div class="space"></div>
+
+        <section>
+            <h1>Camera Intro</h1>
+            <div>
+                <figure>
+                    <div class="centeredBox">
+                        <h3>De camera heeft een timer waarmee hij rondom te speler draait als de speler op de “Jump” knop drukt versneld het aftellen van de timer. De afstand en rotatie van de camera worden bepaald door de tijd die over is. als de timer op 0 staat wordt de DisableCurve() functie opgeroepen.</h3>
+                    </div>
+
+                    <div class="centeredBox">
+                        <!--<img src="img/ballproj/gif2.gif">-->
+                    </div>
+                </figure>
+
+                <figure>
+                    <pre class="codeSnippet">
+                        <code>
+void Update()
+    {
+        if (timer > 0.0f){
+            if (Input.GetButton("Jump"))
+            {
+                timer -= timerSpeed * Time.deltaTime * 2.0f;
+            }
+            else
+            {
+                timer -= timerSpeed * Time.deltaTime;
+            }
+            else
+            {
+                timer = 0.0f;
+                DisableCurve();
+            }
+                        
+            transform.position = new Vector3(Mathf.Sin(timer) * Mathf.Pow(1.0f + timer, 2.0f), timer, -Mathf.Cos(timer) * Mathf.Pow(1.0f + timer, 2.0f)) + target.position;
+                        
+            transform.LookAt(target.transform.position);
+            transform.eulerAngles = new Vector3(25.0f, transform.eulerAngles.y, transform.eulerAngles.z);
+            transform.position = transform.position - (transform.forward * offset) + Vector3.forward;
+        }
+    }
+                        </code>
+                    </pre>
+                    <pre>
+                        <code>
+private void DisableCurve()
+    {
+        CameraSpiralCurve cameraSpiralCurve = gameObject.GetComponent<CameraSpiralCurve>();
+        CameraController cameraController = gameObject.GetComponent<CameraController>();
+                        
+        GameManager gameManager = FindObjectOfType<GameManager>();
+                        
+        cameraController.enabled = true;
+        cameraSpiralCurve.enabled = false;
+                        
+        gameManager.canEnterDebugMode = true;
+        gameManager.SwitchToGameState();
+    }
+                        </code>
+                    </pre>
+                </figure>
+            </div>
+
+            <div>
+                <figure>
+                </figure>
+            </div>
+        </section>
+
+        <div class="space"></div>
+
+        <section>
+            <figure>
+                <div class="space"></div>
+                <div class="centeredBox">
+                    <button class="btn" onclick="location.href='proj/rollu.zip'"><h1 class="textCenter">Download Project!</h1></button>
+                </div>
+                <div class="space"></div>
+            </figure>
+        </section>
+
+        <div class="space"></div>
+
+        <footer class="ContactInfo" id="ContactInfo">
+            <h2>Contact</h2>
+            <p>sandermeijer345@gmail.com</p>
+        </footer>
+
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+    </body>
+</html>

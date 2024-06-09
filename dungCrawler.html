@@ -1,0 +1,213 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="css/navbar.css">
+        <link rel="stylesheet" type="text/css" href="css/projPage.css">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/atom-one-dark.min.css">
+    </head>
+    <body>
+        <header>
+            <a href="index.html" class="logo">Sander Meijer</a>
+
+            <ul>
+                <li><a href="index.html">Projecten</a></li>
+                <li><a href="archief.html">Archief</a></li>
+                <li><a href="#ContactInfo">Contact</a></li>
+            </ul>
+        </header>
+    
+        <div class="space"></div>
+
+        <section>
+            <div>
+                <img class="projWebcover" src="img/webcover_dungc.png">
+                <h2 class="projTitle">Dungeon Crawler</h2>
+                <div class="space"></div>
+            </div>
+
+            <div class="centeredBox">
+                <h3>Dit project is een simpele rpg game zoals de oude "Legend of Zelda" games. Voor dit project heb ik mezelf uitgedaagd dat gevoel zo dicht mogelijk na te maken maar bij sommige elementen mijn eigen draai eraan te geven. De uitdaging voor dit project was om een "Companion" systeem te maken waardoor de speler doormiddel van het verzamelen van companions extra health en attack bonussen kan krijgen. Wat zorgt voor een nog meer redenen om te verkennen.</h3>
+            </div>
+            
+            <div class="centeredBox">
+                <video class="vid" controls>
+                    <source src="vid/2023-02-24_15-33-38.mp4" type="video/mp4">
+                </video>
+            </div>
+        </section>
+
+        <div class="space"></div>
+
+        <section>
+            <h1>Item Pickup</h1>
+            <div>
+                <figure>
+                    <div class="centeredBox">
+                        <h3>Ik heb een systeem gemaakt waardoor je wapen items kan oppakken en gebruiken om enemies mee te verslaan.</h3>
+                    </div>
+
+                    <div class="centeredBox">
+                        <h3>Het werkt alsvolgt als de speler over een item loopt die hij kan oppakken checkt de item of de huidige inventory slot leeg is doormiddel door te checken of de sprite niet null is. Als er geen sprite is wordt de sprite van de item in het vakje geplaatst. Hiermee kunnen we een referentie maken naar de attack script zodat de speler met het juiste wapen attacked of geen wapen als het vakje leeg is.</h3>
+                    </div>
+
+                    <div class="centeredBox">
+                        <img src="img/dungc/gif1.gif">
+                    </div>
+                </figure>
+
+                <figure>
+                    <pre class="codeSnippet">
+                        <code>
+private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Equipment equipment = FindObjectOfType<Equipment>();
+                        
+            if(playerAttack.selectedSlot == InventorySlots.slot1)
+            {
+                if (equipment.iconButtonA.sprite == null)
+                {
+                    equipment.SetIconA(icon);
+                    audioSource.PlayOneShot(equipSound, .3f);
+                    Destroy(gameObject, .3f);
+                }
+            }
+                        
+            if (playerAttack.selectedSlot == InventorySlots.slot2)
+            {
+                if (equipment.iconButtonB.sprite == null)
+                {
+                    equipment.SetIconB(icon);
+                    audioSource.PlayOneShot(equipSound, .3f);
+                    Destroy(gameObject, .3f);
+                }
+            }
+        }
+    }
+                        </code>
+                    </pre>
+
+                    <pre class="codeSnippet">
+                        <code>
+private void StartInactive()
+    {
+        if(iconButtonA.sprite == null)
+        {
+            iconButtonA.gameObject.SetActive(false);
+        }
+                        
+        if (iconButtonB.sprite == null)
+        {
+            iconButtonB.gameObject.SetActive(false);
+        }
+    }
+                        
+    public void SetIconA(Sprite iconSprite)
+    {
+        iconButtonA.gameObject.SetActive(true);
+        iconButtonA.sprite = iconSprite;
+    }
+    public void SetIconB(Sprite iconSprite)
+    {
+        iconButtonB.gameObject.SetActive(true);
+        iconButtonB.sprite = iconSprite;
+    }                            
+                        </code>
+                    </pre>
+                </figure>
+            </div>
+        </section>
+
+        <div class="space"></div>
+
+        <section>
+            <h1>Companion systeem</h1>
+            <div>
+                <figure>
+                    <div class="centeredBox">
+                        <h3>Ik heb tenslotte als extraatje een companion systeem gemaakt. Hiermee kan de speler companions verzamelen die hem volgen en hem health en damage bonussen geven.</h3>
+                    </div>
+
+                    <div class="centeredBox">
+                        <h3>Het werkt alsvolgt de companion heeft een serie aan stats waarmee de gamemanager berekent wat de bonussen zijn. Dit doet de gamemanager met een foreach loop omdat er meerdere companion in de game kunnen zijn.</h3>
+                    </div>
+
+                    <div class="centeredBox">
+                        <h3>De companion volgt ook de speler met een bepaalde afstand bepalend aan de companions positie in de rij.</h3>
+                    </div>
+
+                    <div class="centeredBox">
+                        <img src="img/dungc/gif2.gif" width="70%">
+                    </div>
+                </figure>
+
+                <figure>
+                    <div class="centeredBox">
+                        <h3>Attack bonus berekenen:</h3>
+                    </div>
+
+                    <pre class="codeSnippet">
+                        <code>
+private void CalculateAttackBonus()
+    {
+        damageBonus = 0;
+
+        foreach (Companion companion in companions)
+        {
+            if(Random.value < companion.attackBonusChance)
+            {
+                damageBonus += companion.attackBonus;
+            }
+        }
+    }
+                        </code>
+                    </pre>
+
+                    <div class="centeredBox">
+                        <h3>Max Health bonus berekenen:</h3>
+                    </div>
+
+                    <pre class="codeSnippet">
+                        <code>
+public void FindCompanions()
+    {
+        companions = FindObjectsOfType<Companion>();
+                        
+        foreach (Companion companion in companions)
+        {
+            maxHealth += companion.hpBonus;
+        }
+    }
+                        </code>
+                    </pre>
+                </figure>
+            </div>
+        </section>
+
+        <div class="space"></div>
+
+        <section>
+            <figure>
+                <div class="space"></div>
+                <div class="centeredBox">
+                    <button class="btn" onclick="location.href='proj/rollu.zip'"><h1 class="textCenter">Download Project!</h1></button>
+                </div>
+                <div class="space"></div>
+            </figure>
+        </section>
+
+        <div class="space"></div>
+
+        <footer class="ContactInfo" id="ContactInfo">
+            <h2>Contact</h2>
+            <p>sandermeijer345@gmail.com</p>
+        </footer>
+
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+    </body>
+</html>
