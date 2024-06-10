@@ -1,11 +1,10 @@
 .codeSnippet{
     font-size: 75%;
-    flex: 0 0 100%;
-    max-width: 50%; height: 100%;
+    max-width: 100%;
 }
 
 .codeSnippet code{
-    max-width: 50%;
+    max-width: 500px;
 }
 
 
