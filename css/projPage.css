@@ -1,6 +1,17 @@
+@media only screen and (max-width: 600px) {
+    .codeSnippet{
+        font-size: 120%;
+        max-width: 500px;
+    }
+    
+    .codeSnippet code{
+        max-width: 500px;
+    }
+  }
+
 .codeSnippet{
     font-size: 75%;
-    max-width: 100%;
+    max-width: 500px;
 }
 
 .codeSnippet code{
