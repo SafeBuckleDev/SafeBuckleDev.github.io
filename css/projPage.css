@@ -1,21 +1,36 @@
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 700px) {
     .codeSnippet{
-        font-size: 120%;
+        font-size: 100%;
         max-width: 500px;
     }
     
     .codeSnippet code{
         max-width: 500px;
     }
-  }
 
-.codeSnippet{
-    font-size: 75%;
-    max-width: 500px;
+    .webGame{
+        display: none;
+    }
 }
 
-.codeSnippet code{
-    max-width: 500px;
+@media only screen and (min-width: 700px) {
+    .codeSnippet{
+        font-size: 75%;
+        max-width: 500px;
+    }
+    
+    .codeSnippet code{
+        max-width: 500px;
+    }
+
+    .webGame{
+        width: 960px;
+        height: 640px;
+        overflow: hidden;
+        font-size: 0%;
+        margin:  50px;
+    }
+    
 }
 
 
