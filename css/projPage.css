@@ -1,4 +1,4 @@
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 1023px) {
     .codeSnippet{
         font-size: 100%;
         max-width: 500px;
@@ -13,7 +13,7 @@
     }
 }
 
-@media only screen and (min-width: 700px) {
+@media only screen and (min-width: 1024px) {
     .codeSnippet{
         font-size: 75%;
         max-width: 500px;
@@ -30,6 +30,10 @@
         font-size: 0%;
         margin:  50px;
     }
+    
+}
+
+@media screen {
     
 }
 
