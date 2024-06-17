@@ -11,22 +11,6 @@
     .webGame{
         display: none;
     }
-
-    section div figure .centeredBox{
-        width: 500px;
-        height: 100%;
-        font-size: 90%;
-        text-align: center;
-        margin: 15px;
-    }
-    
-    section div h3{
-        text-align: center;
-        font-size: 90%;
-        max-width: 500px;
-        height: 100%;
-        word-wrap: break-word;   
-    }
 }
 
 @media only screen and (min-width: 1024px) {
@@ -45,22 +29,6 @@
         overflow: hidden;
         font-size: 0%;
         margin:  50px;
-    }
-    
-    section div figure .centeredBox{
-        width: 500px;
-        height: 100%;
-        font-size: 90%;
-        text-align: center;
-        margin: 15px;
-    }
-    
-    section div h3{
-        text-align: center;
-        font-size: 90%;
-        max-width: 1000px;
-        height: 100%;
-        word-wrap: break-word;   
     }
 }
 
@@ -108,4 +76,20 @@ section div figure{
 .vid{
     margin: 50px;
     width: 30%;
+}
+
+section div figure .centeredBox{
+    width: 500px;
+    height: 100%;
+    font-size: 100%;
+    text-align: center;
+    margin: 15px;
+}
+
+section div h3{
+    text-align: center;
+    font-size: 100%;
+    max-width: 1000px;
+    height: 100%;
+    word-wrap: break-word;   
 }
