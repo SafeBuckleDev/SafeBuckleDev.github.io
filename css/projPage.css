@@ -13,18 +13,16 @@
     }
 
     section div figure .centeredBox{
-        width: 100%;
+        max-width: 1023px;
         height: 100%;
-        font-size: 125%;
         text-align: center;
-        word-wrap: break-word;
+        word-wrap: break-word;   
         margin: 15px;
     }
     
     section div h3{
-        font-size: 125%;
         text-align: center;
-        width: 90%;
+        max-width: 1023px;
         word-wrap: break-word;   
     }
 }
@@ -59,7 +57,7 @@
     section div h3{
         font-size: 100%;
         text-align: center;
-        width: 90%;
+        width: 900px;
         word-wrap: break-word;   
     }
     
