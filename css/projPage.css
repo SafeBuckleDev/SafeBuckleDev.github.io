@@ -80,7 +80,7 @@ section div figure{
 
 section div figure .centeredBox{
     text-align: center;
-    max-width: 500px;
+    width: 500px;
     height: 100%;
     font-size: 3.2vh;
     word-wrap: break-word;
