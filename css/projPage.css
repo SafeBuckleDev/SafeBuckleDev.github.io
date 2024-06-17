@@ -78,18 +78,6 @@ section div figure{
     width: 30%;
 }
 
-section div figure .centeredBox{
+h3{
     text-align: center;
-    width: 500px;
-    height: 100%;
-    font-size: 3.2vh;
-    word-wrap: break-word;
-}
-
-section div h3{
-    text-align: center;
-    max-width: 1000px;
-    height: 100%;
-    font-size: 3.2vh;
-    word-wrap: break-word;
 }
