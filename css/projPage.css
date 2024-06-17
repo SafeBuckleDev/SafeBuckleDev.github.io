@@ -79,15 +79,14 @@ section div figure{
 }
 
 section div figure .centeredBox{
-    width: 500px;
-    height: 100%;
-    font-size: 100%;
     text-align: center;
+    max-width: 500px;
+    height: 100%;
+    word-wrap: break-word;
 }
 
 section div h3{
     text-align: center;
-    font-size: 100%;
     max-width: 1000px;
     height: 100%;
     word-wrap: break-word;   
