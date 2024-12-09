@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "./static/css/main.40e63eb7.css",
+    "main.js": "./static/js/main.adc80df8.js",
+    "static/js/453.f9d1b334.chunk.js": "./static/js/453.f9d1b334.chunk.js",
+    "static/media/rotatingCube.webm": "./static/media/rotatingCube.9974270782590a5ff224.webm",
+    "index.html": "./index.html",
+    "main.40e63eb7.css.map": "./static/css/main.40e63eb7.css.map",
+    "main.adc80df8.js.map": "./static/js/main.adc80df8.js.map",
+    "453.f9d1b334.chunk.js.map": "./static/js/453.f9d1b334.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.40e63eb7.css",
+    "static/js/main.adc80df8.js"
+  ]
+}
